@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const getTasks = require("./getTasks/getTasks.js");
 const createTasks = require("./createTasks/createTasks.js");
 const deleteTasks = require("./deleteTasks/deleteTasks.js");
+const updateTasks = require("./updateTasks/updateTasks.js");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -54,4 +55,16 @@ app.delete("/tasks/:taskId", (req, res) => {
         error: error
       });
     });
+});
+
+app.put("/tasks/:id", (req, res) => {
+  const id = req.params.id;
+  const title = req.body.title;
+  if (isNaN(id)) {
+    res.status(404).send("Id is not number or no title");
+  } else {
+    return updateTasks(title, id).then(data => {
+      res.status(200).json(data);
+    });
+  }
 });
