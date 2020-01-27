@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "create": "psql -d redux_full -f ./sql-queries.sql",
+    "createtable": "psql -d redux_full -f ./sql-schema.sql"
   },
   "author": "",
   "license": "ISC",
