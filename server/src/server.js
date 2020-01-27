@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 
 const getTasks = require("./getTasks/getTasks.js");
 const createTasks = require("./createTasks/createTasks.js");
+const deleteTasks = require("./deleteTasks/deleteTasks.js");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -39,4 +40,18 @@ app.post("/tasks", (req, res) => {
       message: "Error in adding task"
     });
   }
+});
+
+app.delete("/tasks/:taskId", (req, res) => {
+  const id = req.params.taskId;
+  return deleteTasks(id)
+    .then(data => {
+      res.status(200).send("Tasks deleted successfully");
+    })
+    .catch(error => {
+      res.status(400).json({
+        message: "Error in deleting task",
+        error: error
+      });
+    });
 });
