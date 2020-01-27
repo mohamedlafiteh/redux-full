@@ -7,6 +7,7 @@ const getTasks = require("./getTasks/getTasks.js");
 const createTasks = require("./createTasks/createTasks.js");
 const deleteTasks = require("./deleteTasks/deleteTasks.js");
 const updateTasks = require("./updateTasks/updateTasks.js");
+const getTaskById = require("./getTaskById/getTaskById.js");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -64,6 +65,18 @@ app.put("/tasks/:id", (req, res) => {
     res.status(404).send("Id is not number or no title");
   } else {
     return updateTasks(title, id).then(data => {
+      res.status(200).json(data);
+    });
+  }
+});
+
+app.get("/tasks/:id", (req, res) => {
+  const id = req.params.id;
+
+  if (isNaN(id)) {
+    res.status(404).send("Id is not number");
+  } else {
+    return getTaskById(id).then(data => {
       res.status(200).json(data);
     });
   }
