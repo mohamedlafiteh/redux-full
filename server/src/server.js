@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const getTasks = require("./getTasks/getTasks.js");
+const createTasks = require("./createTasks/createTasks.js");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -22,4 +23,20 @@ app.get("/", (req, res) => {
     .catch(error => {
       res.status(400).send(error);
     });
+});
+
+app.post("/tasks", (req, res) => {
+  const title = req.body.title;
+  const completed = req.body.completed;
+  // console.log(`this is title ${title} this is completed ${completed}`);
+  if (title.length > 0 && title.length < 150) {
+    createTasks(title, completed).then(data => {
+      res.status(200).json("Added successfully");
+    });
+  } else {
+    res.status(400).json({
+      error: error,
+      message: "Error in adding task"
+    });
+  }
 });
