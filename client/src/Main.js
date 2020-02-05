@@ -62,7 +62,18 @@ class Main extends Component {
   };
 
   deleteTask = id => {
-    console.log("deleted" + id);
+    const deleteTask = {
+      method: "DELETE",
+      body: JSON.stringify({
+        id: id
+      }),
+      headers: { "content-type": "application/json" }
+    };
+    fetch(`http://localhost:3010/tasks/${id}`, deleteTask)
+      .then(res => res.json())
+      .then(data => {
+        this.getTodos();
+      });
   };
 
   checkboxHandler = id => {
