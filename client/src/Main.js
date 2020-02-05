@@ -33,25 +33,29 @@ class Main extends Component {
   };
 
   saveRow = (id, newTitle) => {
-    const updateTask = {
-      method: "PUT",
-      body: JSON.stringify({
-        id: id,
-        title: newTitle
-      }),
-      headers: { "content-type": "application/json" }
-    };
+    if (newTitle.length !== 0) {
+      const updateTask = {
+        method: "PUT",
+        body: JSON.stringify({
+          id: id,
+          title: newTitle
+        }),
+        headers: { "content-type": "application/json" }
+      };
 
-    fetch(`http://localhost:3010/tasks/${id}`, updateTask)
-      .then(res => res.json())
-      .then(data => {
-        this.getTodos();
+      fetch(`http://localhost:3010/tasks/${id}`, updateTask)
+        .then(res => res.json())
+        .then(data => {
+          this.getTodos();
+        });
+
+      this.setState({
+        selectedId: null,
+        selected: false
       });
-
-    this.setState({
-      selectedId: null,
-      selected: false
-    });
+    } else {
+      this.getTodos();
+    }
   };
 
   cancelEdit = () => {
