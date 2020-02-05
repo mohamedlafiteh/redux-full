@@ -33,7 +33,21 @@ class Main extends Component {
   };
 
   saveRow = (id, newTitle) => {
-    console.log(id, newTitle);
+    const updateTask = {
+      method: "PUT",
+      body: JSON.stringify({
+        id: id,
+        title: newTitle
+      }),
+      headers: { "content-type": "application/json" }
+    };
+
+    fetch(`http://localhost:3010/tasks/${id}`, updateTask)
+      .then(res => res.json())
+      .then(data => {
+        this.getTodos();
+      });
+
     this.setState({
       selectedId: null,
       selected: false
@@ -41,11 +55,18 @@ class Main extends Component {
   };
 
   cancelEdit = () => {
-    console.log("clicked");
     this.setState({
       selectedId: null,
       selected: false
     });
+  };
+
+  deleteTask = id => {
+    console.log("deleted" + id);
+  };
+
+  checkboxHandler = id => {
+    console.log("checkbox" + id);
   };
 
   render() {
@@ -58,6 +79,8 @@ class Main extends Component {
           saveRow={this.saveRow}
           editRow={this.editRow}
           cancelEdit={this.cancelEdit}
+          deleteTask={this.deleteTask}
+          checkboxHandler={this.checkboxHandler}
         />
       </div>
     );

@@ -47,6 +47,8 @@ class Todos extends React.Component {
                   id={todo.id}
                   title={todo.title}
                   completed={todo.completed}
+                  deleteTask={this.props.deleteTask}
+                  checkboxHandler={this.props.checkboxHandler}
                 />
               );
             }

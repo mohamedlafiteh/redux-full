@@ -1,11 +1,18 @@
 import React from "react";
 import { Button, Checkbox, Icon, Table } from "semantic-ui-react";
 
-const ViewRow = ({ id, title, completed, editRow }) => {
+const ViewRow = ({
+  id,
+  title,
+  completed,
+  editRow,
+  deleteTask,
+  checkboxHandler
+}) => {
   return (
     <Table.Row>
       <Table.Cell collapsing>
-        <Checkbox slider />
+        <Checkbox slider onChange={() => checkboxHandler(id)} />
       </Table.Cell>
       <Table.Cell>{title}</Table.Cell>
       <Table.Cell>September 14, 2013</Table.Cell>
@@ -23,7 +30,13 @@ const ViewRow = ({ id, title, completed, editRow }) => {
         </Button>
       </Table.Cell>
       <Table.Cell>
-        <Button icon labelPosition='left' circular color='red'>
+        <Button
+          onClick={() => deleteTask(id)}
+          icon
+          labelPosition='left'
+          circular
+          color='red'
+        >
           Delete
         </Button>
       </Table.Cell>
