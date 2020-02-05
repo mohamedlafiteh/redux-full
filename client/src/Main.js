@@ -5,9 +5,18 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: []
+      todos: [],
+      selectedId: null,
+      selected: false
     };
   }
+
+  editRow = id => {
+    this.setState({
+      selectedId: id,
+      selected: true
+    });
+  };
 
   componentDidMount() {
     this.getTodos();
@@ -22,10 +31,34 @@ class Main extends Component {
         });
       });
   };
+
+  saveRow = (id, newTitle) => {
+    console.log(id, newTitle);
+    this.setState({
+      selectedId: null,
+      selected: false
+    });
+  };
+
+  cancelEdit = () => {
+    console.log("clicked");
+    this.setState({
+      selectedId: null,
+      selected: false
+    });
+  };
+
   render() {
     return (
       <div>
-        <Todos todos={this.state.todos} />
+        <Todos
+          todos={this.state.todos}
+          selectedId={this.state.selectedId}
+          selected={this.state.selected}
+          saveRow={this.saveRow}
+          editRow={this.editRow}
+          cancelEdit={this.cancelEdit}
+        />
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button, Checkbox, Icon, Table } from "semantic-ui-react";
 
 const ViewRow = ({ id, title, completed, editRow }) => {
@@ -12,7 +12,13 @@ const ViewRow = ({ id, title, completed, editRow }) => {
       <Table.Cell>September 03, 2014</Table.Cell>
       <Table.Cell>Not Completed</Table.Cell>
       <Table.Cell>
-        <Button icon circular labelPosition='left' primary>
+        <Button
+          onClick={() => editRow(id)}
+          icon
+          circular
+          labelPosition='left'
+          primary
+        >
           Edit
         </Button>
       </Table.Cell>

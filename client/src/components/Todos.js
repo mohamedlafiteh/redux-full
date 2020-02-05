@@ -7,17 +7,9 @@ import { Checkbox, Icon, Table } from "semantic-ui-react";
 class Todos extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedID: null,
-      selected: false
-    };
+    this.state = {};
   }
-  editRow = id => {
-    this.setState({
-      selectedID: id,
-      selected: true
-    });
-  };
+
   render() {
     return (
       <Table celled compact definition>
@@ -36,21 +28,22 @@ class Todos extends React.Component {
 
         <Table.Body>
           {this.props.todos.map(todo => {
-            if (todo.id === this.state.selectedID) {
+            if (todo.id === this.props.selectedId) {
               return (
                 <EditRow
                   key={todo.id}
-                  saveRow={this.saveRow}
+                  saveRow={this.props.saveRow}
                   id={todo.id}
                   title={todo.title}
                   completed={todo.completed}
+                  cancelEdit={this.props.cancelEdit}
                 />
               );
             } else {
               return (
                 <ViewRow
                   key={todo.id}
-                  editRow={this.editRow}
+                  editRow={this.props.editRow}
                   id={todo.id}
                   title={todo.title}
                   completed={todo.completed}
