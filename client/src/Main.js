@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Todos from "./components/Todos";
+import AddTodo from "./components/AddTodo";
 
 class Main extends Component {
   constructor(props) {
@@ -84,9 +85,26 @@ class Main extends Component {
     console.log("checkbox" + id);
   };
 
+  addTodo = title => {
+    const newTodo = {
+      method: "POST",
+      body: JSON.stringify({
+        title: title
+      }),
+      headers: { "content-type": "application/json" }
+    };
+    fetch("http://localhost:3010/tasks", newTodo)
+      .then(res => res.json())
+      .then(data => {
+        this.getTodos();
+      });
+  };
+
   render() {
     return (
       <div>
+        <AddTodo addTodo={this.addTodo} />
+
         <Todos
           todos={this.state.todos}
           selectedId={this.state.selectedId}
