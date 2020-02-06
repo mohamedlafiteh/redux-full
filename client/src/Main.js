@@ -8,7 +8,10 @@ class Main extends Component {
     this.state = {
       todos: [],
       selectedId: null,
-      selected: false
+      selectedIdStatus: null,
+      selectedIdStatusCase: false,
+      selected: false,
+      status: false
     };
   }
 
@@ -43,7 +46,6 @@ class Main extends Component {
         }),
         headers: { "content-type": "application/json" }
       };
-
       fetch(`http://localhost:3010/tasks/${id}`, updateTask)
         .then(res => res.json())
         .then(data => {
@@ -82,17 +84,38 @@ class Main extends Component {
   };
 
   checkboxHandler = id => {
-    console.log("checkbox" + id);
+    this.setState({
+      selectedIdStatus: id,
+      selectedIdStatusCase: true,
+      status: !this.state.status
+    });
+
+    const newStatus = {
+      method: "PUT",
+      body: JSON.stringify({
+        id: id,
+        completed: this.state.status
+      }),
+      headers: { "content-type": "application/json" }
+    };
+
+    fetch(`http://localhost:3010/taskStatus/${id}`, newStatus)
+      .then(res => res.json())
+      .then(data => {
+        this.getTodos();
+      });
   };
 
   addTodo = title => {
     const newTodo = {
       method: "POST",
       body: JSON.stringify({
-        title: title
+        title: title,
+        completed: false
       }),
       headers: { "content-type": "application/json" }
     };
+
     fetch("http://localhost:3010/tasks", newTodo)
       .then(res => res.json())
       .then(data => {

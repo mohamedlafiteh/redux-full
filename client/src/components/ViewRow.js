@@ -14,10 +14,18 @@ const ViewRow = ({
       <Table.Cell collapsing>
         <Checkbox slider onChange={() => checkboxHandler(id)} />
       </Table.Cell>
-      <Table.Cell>{title}</Table.Cell>
+      <Table.Cell
+        style={{ textDecoration: completed ? "line-through" : "none" }}
+      >
+        {title}
+      </Table.Cell>
       <Table.Cell>September 14, 2013</Table.Cell>
       <Table.Cell>September 03, 2014</Table.Cell>
-      <Table.Cell>Not Completed</Table.Cell>
+      {completed ? (
+        <Table.Cell>Completed</Table.Cell>
+      ) : (
+        <Table.Cell>Not completed</Table.Cell>
+      )}
       <Table.Cell>
         <Button
           onClick={() => editRow(id)}

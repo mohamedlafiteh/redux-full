@@ -39,7 +39,7 @@ export class AddTodo extends Component {
             labelPosition='left'
             color='green'
           >
-            AddTodo
+            Add to do
           </Button>
         </Segment>
       </div>
