@@ -7,21 +7,20 @@ const ViewRow = ({
   completed,
   editRow,
   deleteTask,
-  checkboxHandler
+  checkboxHandler,
+  status
 }) => {
   return (
     <Table.Row>
       <Table.Cell collapsing>
         <Checkbox slider onChange={() => checkboxHandler(id)} />
       </Table.Cell>
-      <Table.Cell
-        style={{ textDecoration: completed ? "line-through" : "none" }}
-      >
+      <Table.Cell style={{ textDecoration: status ? "line-through" : "none" }}>
         {title}
       </Table.Cell>
       <Table.Cell>September 14, 2013</Table.Cell>
       <Table.Cell>September 03, 2014</Table.Cell>
-      {completed ? (
+      {status ? (
         <Table.Cell>Completed</Table.Cell>
       ) : (
         <Table.Cell>Not completed</Table.Cell>

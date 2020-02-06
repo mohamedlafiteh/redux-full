@@ -2,12 +2,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 const getTasks = require("./getTasks/getTasks.js");
 const createTasks = require("./createTasks/createTasks.js");
 const deleteTasks = require("./deleteTasks/deleteTasks.js");
 const updateTasks = require("./updateTasks/updateTasks.js");
 const getTaskById = require("./getTaskById/getTaskById.js");
+const updateTasksStatus = require("./updateTasksStatus/updateTasksStatus");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -48,7 +50,7 @@ app.delete("/tasks/:taskId", (req, res) => {
   const id = req.params.taskId;
   return deleteTasks(id)
     .then(data => {
-      res.status(200).send("Tasks deleted successfully");
+      res.status(200).send(data);
     })
     .catch(error => {
       res.status(400).json({
@@ -70,6 +72,18 @@ app.put("/tasks/:id", (req, res) => {
   }
 });
 
+app.put("/taskStatus/:id", (req, res) => {
+  const id = req.params.id;
+  const status = req.body.completed;
+  if (isNaN(id)) {
+    res.status(404).send("Id is not number or no title");
+  } else {
+    return updateTasksStatus(status, id).then(data => {
+      res.status(200).json(data);
+    });
+  }
+});
+
 app.get("/tasks/:id", (req, res) => {
   const id = req.params.id;
 
@@ -81,3 +95,12 @@ app.get("/tasks/:id", (req, res) => {
     });
   }
 });
+
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}

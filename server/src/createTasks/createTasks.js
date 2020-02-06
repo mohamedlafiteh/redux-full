@@ -4,7 +4,6 @@ const pool = new Pool(config);
 
 createTasks = (title, completed) => {
   //console.log(`this is title ${title} this is completed ${completed}`);
-
   const sqlQuery = "INSERT INTO tasks (title,completed) VALUES ($1,$2)";
 
   return new Promise((resolve, reject) => {

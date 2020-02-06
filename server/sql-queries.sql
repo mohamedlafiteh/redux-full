@@ -1,7 +1,7 @@
 INSERT INTO tasks
     (title,completed)
 VALUES
-    ( 'visit friend Sam', true);
+    ( 'visit friend Sam', false);
 INSERT INTO tasks
     ( title, completed)
 VALUES

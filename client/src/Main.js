@@ -137,6 +137,7 @@ class Main extends Component {
           cancelEdit={this.cancelEdit}
           deleteTask={this.deleteTask}
           checkboxHandler={this.checkboxHandler}
+          status={this.state.status}
         />
       </div>
     );
